@@ -1,9 +1,28 @@
 from rest_framework import serializers
 
-from .models import Event
+from .models import Event, Outcome
+
+
+class OutcomeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Outcome
+        fields = [
+            "id",
+            "label",
+            "created_at",
+        ]
+        read_only_fields = [
+            "id",
+            "created_at",
+        ]
 
 
 class EventSerializer(serializers.ModelSerializer):
+    outcomes = OutcomeSerializer(
+        many=True,
+        read_only=True,
+    )
+
     class Meta:
         model = Event
         fields = [
@@ -17,6 +36,7 @@ class EventSerializer(serializers.ModelSerializer):
             "closes_at",
             "resolved_at",
             "winning_outcome",
+            "outcomes",
             "created_at",
             "updated_at",
         ]
@@ -25,6 +45,7 @@ class EventSerializer(serializers.ModelSerializer):
             "status",
             "resolved_at",
             "winning_outcome",
+            "outcomes",
             "created_at",
             "updated_at",
         ]
