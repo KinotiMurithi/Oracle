@@ -1,7 +1,7 @@
 import { ArrowRight, Brain } from "lucide-react";
 import Link from "next/link";
 
-import { getEvents } from "@/lib/api";
+import { getEvents, type Event } from "@/lib/api";
 
 function formatCategory(category: string) {
   return category.charAt(0) + category.slice(1).toLowerCase();
@@ -16,7 +16,7 @@ function formatClosingDate(date: string) {
 }
 
 export default async function EventsPage() {
-  let events = [];
+  let events: Event[] = [];
 
   try {
     events = await getEvents();
